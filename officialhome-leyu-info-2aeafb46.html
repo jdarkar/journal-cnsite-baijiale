@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>乐鱼 · 信息卡片介绍页</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f2f7fa;
+      color: #1e2b3a;
+      line-height: 1.6;
+      padding: 1.5rem;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(145deg, #e0f0f5 0%, #cfe3ed 100%);
+      border-radius: 32px;
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 10px 25px -8px rgba(40, 100, 120, 0.15);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hero-text h1 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #0b3b4a;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-text .sub {
+      font-size: 1.05rem;
+      color: #2d5f72;
+      max-width: 480px;
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-visual {
+      background: #ffffffaa;
+      backdrop-filter: blur(4px);
+      padding: 0.6rem 1.4rem;
+      border-radius: 60px;
+      font-weight: 500;
+      color: #1a6c7c;
+      border: 1px solid #b1d4e0;
+      box-shadow: 0 2px 6px rgba(0,30,40,0.04);
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+    }
+
+    .hero-visual span {
+      background: #1a7f8c;
+      color: #fff;
+      border-radius: 30px;
+      padding: 0.1rem 0.7rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.3px;
+    }
+
+    /* 网格卡片区 */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: 540px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(30, 70, 80, 0.05);
+      border: 1px solid #e3edf2;
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: #9ac7d4;
+      box-shadow: 0 8px 20px -8px rgba(30, 90, 110, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #0f4a5a;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      color: #2d4b58;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card .tag {
+      display: inline-block;
+      background: #d6eaf0;
+      color: #135f6e;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-top: 0.3rem;
+    }
+
+    /* 用途卡片双列（适合人群 + 场景） */
+    .duo {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.2rem;
+    }
+
+    @media (min-width: 600px) {
+      .duo {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .usage-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.8rem 1.6rem;
+      border: 1px solid #dcebf0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    }
+
+    .usage-card h3 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #0f4a5a;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .usage-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .usage-card li {
+      padding: 0.3rem 0;
+      font-size: 0.95rem;
+      color: #1d4351;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .usage-card li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: #2c8b9e;
+      font-weight: 600;
+    }
+
+    /* 自然链接段落 */
+    .link-paragraph {
+      background: #e9f3f8;
+      border-radius: 24px;
+      padding: 1.6rem 1.8rem;
+      margin-bottom: 2.5rem;
+      border-left: 5px solid #2a9d8f;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .link-paragraph p {
+      font-size: 1rem;
+      color: #1d3e4b;
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    .link-paragraph a {
+      color: #146b7a;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 2px solid #8fc1cc;
+      transition: border-color 0.15s;
+    }
+
+    .link-paragraph a:hover {
+      border-bottom-color: #1b7f90;
+      color: #0b5868;
+    }
+
+    /* FAQ 摘要 */
+    .faq-mini {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.8rem 1.8rem;
+      border: 1px solid #d3e3ea;
+      margin-bottom: 2rem;
+    }
+
+    .faq-mini h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #104b5b;
+      margin-bottom: 1rem;
+    }
+
+    .faq-item {
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #e2edf2;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      color: #1a5b6b;
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .faq-a {
+      color: #2d5362;
+      font-size: 0.9rem;
+    }
+
+    /* 底部 */
+    .footer-note {
+      text-align: center;
+      padding: 1.2rem 0 0.6rem;
+      color: #476f7e;
+      font-size: 0.8rem;
+      border-top: 1px solid #d2e2e9;
+      margin-top: 1rem;
+    }
+
+    .inline-link {
+      color: #146b7a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .inline-link:hover {
+      text-decoration: underline;
+    }
+
+    /* 响应式微调 */
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 1.9rem;
+      }
+      .hero {
+        padding: 1.8rem 1.2rem;
+      }
+      .card, .usage-card, .faq-mini, .link-paragraph {
+        padding: 1.4rem 1.2rem;
+      }
+    }
+
+    .badge-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #3daaba;
+      border-radius: 10px;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-text">
+        <h1>乐鱼</h1>
+        <p class="sub">一个稳定、简洁的信息入口 · 日常使用中逐渐成为习惯</p>
+        <div class="hero-visual">
+          <span>入口</span> 页面说明 · 卡片式导航
+        </div>
+      </div>
+      <div style="margin-top: 0.5rem; color: #1b6c7c; font-size: 0.9rem; background: #ffffff60; padding: 0.3rem 1rem; border-radius: 30px;">
+        ⚡ 轻量 · 直接
+      </div>
+    </header>
+
+    <!-- 用途卡片 + 适合人群 -->
+    <div class="duo">
+      <div class="usage-card">
+        <h3>📋 用途卡片</h3>
+        <ul>
+          <li>快速锚定常用页面与资源</li>
+          <li>以卡片概览代替繁琐导航</li>
+          <li>保持低干扰的浏览节奏</li>
+          <li>适合日常信息查阅与整理</li>
+        </ul>
+        <div style="margin-top: 0.7rem;"><span class="tag">轻交互</span> <span class="tag">低跳转</span></div>
+      </div>
+
+      <div class="usage-card">
+        <h3>👥 适合人群</h3>
+        <ul>
+          <li>追求稳定入口的日常使用者</li>
+          <li>偏好干净卡片式浏览的朋友</li>
+          <li>希望快速定位而不迷失的用户</li>
+          <li>对页面信息结构有要求的读者</li>
+        </ul>
+        <div style="margin-top: 0.7rem;"><span class="tag">实用派</span> <span class="tag">信息优先</span></div>
+      </div>
+    </div>
+
+    <!-- 网格卡片：主视觉 + 扩展说明 -->
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🧭</div>
+        <h3>稳定入口</h3>
+        <p>页面结构清晰，减少多余跳转。每次打开都指向同一处可靠位置。</p>
+        <div class="tag">固定锚点</div>
+      </div>
+      <div class="card">
+        <div class="icon">📇</div>
+        <h3>卡片式索引</h3>
+        <p>功能分区、人群画像、常见疑问，都以卡片组织，一目了然。</p>
+        <div class="tag">视觉分区</div>
+      </div>
+      <div class="card">
+        <div class="icon">🪶</div>
+        <h3>轻量化质感</h3>
+        <p>蓝绿色点缀与柔和背景，阅读压力小，移动端同样友好。</p>
+        <div class="tag">响应式</div>
+      </div>
+    </div>
+
+    <!-- 自然链接段落（a标签文本严格为「乐鱼」） -->
+    <div class="link-paragraph">
+      <p>如果你正在寻找一个不那么嘈杂的起始页，可以试试将</p>
+      <a href="https://officialhome-leyu.com">乐鱼</a>
+      <p>设为自己浏览目录中的一个安静角落。这里没有冗余的推荐流，只有信息卡片和简洁的指引。</p>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-mini">
+      <h3>📌 常见疑问 · 摘要</h3>
+      <div class="faq-item">
+        <div class="faq-q"><span class="badge-dot"></span>这个页面是做什么的？</div>
+        <div class="faq-a">一个以卡片和信息说明为主的介绍页，指向固定入口，方便快速了解用途。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="badge-dot"></span>卡片里的内容会经常变吗？</div>
+        <div class="faq-a">结构基本稳定，内容描述会根据实际方向做调整，保持新鲜感但不扰乱使用习惯。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="badge-dot"></span>移动端看得舒服吗？</div>
+        <div class="faq-a">完全适配手机屏幕，卡片自动排列，字体和间距都针对小屏优化。</div>
+      </div>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer-note">
+      <span>信息卡片式 · 蓝绿点缀 · 自然入口</span>
+      <br style="display: block; margin: 0.2rem 0;">
+      <span style="opacity: 0.7;">页面说明 · 稳定直达</span>
+    </div>
+
+  </div>
+</body>
+</html>
